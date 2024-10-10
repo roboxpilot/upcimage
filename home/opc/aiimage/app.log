@@ -1,0 +1,3783 @@
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here is the JSON representation of the content extracted from the image:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here is the JSON representation of the content extracted from the image:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here is the JSON representation of the content extracted from the image:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+  "classification": "product_related"
+}
+----------------------------classification {
+  "classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here is the JSON representation of the content extracted from the image:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here is the JSON representation of the content extracted from the image:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the JSON representation of the content extracted from the image:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the JSON representation of the content extracted from the image:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: None
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• POP Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:41022 - "POST /conversation HTTP/1.1" 200 OK
+INFO:     154.213.184.18:37724 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Based on the content extracted from the image, here is the JSON representation:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "duration": "N/A",
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Based on the content extracted from the image, here is the JSON representation:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"N/A\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Based on the content extracted from the image, here is the JSON representation:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"N/A\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Based on the content extracted from the image, here is the JSON representation:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"N/A\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Based on the content extracted from the image, here is the JSON representation:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"N/A\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Based on the content extracted from the image, here is the JSON representation:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"duration\\\": \\\"N/A\\\",\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Based on the content extracted from the image, here is the JSON representation:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"duration\\\": \\\"N/A\\\",\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: null
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• POP Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:36430 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here’s the extracted content in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "duration": "4 Weeks",
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "null",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20 OMR",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"null","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20 OMR","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"duration\\\": \\\"4 Weeks\\\",\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"duration\\\": \\\"4 Weeks\\\",\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": "null",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20 OMR",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+* Product Name: Hayyak 20
+* Product Description: null
+* Product Family: GSM
+* Product Group: Prepaid
+* Product Offer Price: 20 OMR
+* Pop Type: Normal
+* Price Category: Base Price
+* Price Mode: Non-Recurring
+* Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:43208 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "monthly data pack",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"monthly data pack","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description with monthly data pack\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description with monthly data pack\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": "monthly data pack",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: monthly data pack
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• Pop Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:50034 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+/home/opc/aiimage/app.py:161: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  messageTime=datetime.utcnow().isoformat() + "Z",
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description with monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "monthly data pack",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"monthly data pack","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description with monthly data pack\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"lets proceed\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: null * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 OMR * Pop Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description with monthly data pack\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"lets proceed\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is True
+-----------------------------Confirmation message: True
+INFO:     152.67.16.165:36354 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here's the extracted content in JSON format:
+
+```json
+{
+    "plan_name": "Hayyak 20",
+    "validity": "4 Weeks",
+    "units": {
+        "data_allowance": "34 GB",
+        "flexi_minutes": "650 min"
+    },
+    "price": "20 OMR",
+    "vat": "5% VAT included"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n    \"plan_name\": \"Hayyak 20\",\n    \"validity\": \"4 Weeks\",\n    \"units\": {\n        \"data_allowance\": \"34 GB\",\n        \"flexi_minutes\": \"650 min\"\n    },\n    \"price\": \"20 OMR\",\n    \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n    \"plan_name\": \"Hayyak 20\",\n    \"validity\": \"4 Weeks\",\n    \"units\": {\n        \"data_allowance\": \"34 GB\",\n        \"flexi_minutes\": \"650 min\"\n    },\n    \"price\": \"20 OMR\",\n    \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+  "classification": "product_related"
+}
+----------------------------classification {
+  "classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n    \"plan_name\": \"Hayyak 20\",\n    \"validity\": \"4 Weeks\",\n    \"units\": {\n        \"data_allowance\": \"34 GB\",\n        \"flexi_minutes\": \"650 min\"\n    },\n    \"price\": \"20 OMR\",\n    \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n    \"plan_name\": \"Hayyak 20\",\n    \"validity\": \"4 Weeks\",\n    \"units\": {\n        \"data_allowance\": \"34 GB\",\n        \"flexi_minutes\": \"650 min\"\n    },\n    \"price\": \"20 OMR\",\n    \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here's the extracted content in JSON format:\\n\\n```json\\n{\\n    \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n    \\\"validity\\\": \\\"4 Weeks\\\",\\n    \\\"units\\\": {\\n        \\\"data_allowance\\\": \\\"34 GB\\\",\\n        \\\"flexi_minutes\\\": \\\"650 min\\\"\\n    },\\n    \\\"price\\\": \\\"20 OMR\\\",\\n    \\\"vat\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here's the extracted content in JSON format:\\n\\n```json\\n{\\n    \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n    \\\"validity\\\": \\\"4 Weeks\\\",\\n    \\\"units\\\": {\\n        \\\"data_allowance\\\": \\\"34 GB\\\",\\n        \\\"flexi_minutes\\\": \\\"650 min\\\"\\n    },\\n    \\\"price\\\": \\\"20 OMR\\\",\\n    \\\"vat\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: 
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• Pop Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:58766 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here’s the extracted content in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+* Product Name: Hayyak 20
+* Product Description: null
+* Product Family: GSM
+* Product Group: Prepaid
+* Offer Price: 20
+* POP Type: Normal
+* Price Category: Base Price
+* Price Mode: Non-Recurring
+* Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:49916 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here is the extracted content from the image formatted in JSON:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "Data allowance": "34 GB",
+    "Flexi Minutes": "650 min"
+  },
+  "price": "20 OMR",
+  "VAT": "5% VAT included"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here is the extracted content from the image formatted in JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"Data allowance\": \"34 GB\",\n    \"Flexi Minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here is the extracted content from the image formatted in JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"Data allowance\": \"34 GB\",\n    \"Flexi Minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5% VAT included\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here is the extracted content from the image formatted in JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"Data allowance\": \"34 GB\",\n    \"Flexi Minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here is the extracted content from the image formatted in JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"Data allowance\": \"34 GB\",\n    \"Flexi Minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5% VAT included\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content from the image formatted in JSON:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"Data allowance\\\": \\\"34 GB\\\",\\n    \\\"Flexi Minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"VAT\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content from the image formatted in JSON:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"Data allowance\\\": \\\"34 GB\\\",\\n    \\\"Flexi Minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"VAT\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: null
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• Pop Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:58458 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here’s the extracted content from the image in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content from the image in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content from the image in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+* Product Name: Hayyak 20
+* Product Description: Not Provided
+* Product Family: GSM
+* Product Group: Prepaid
+* Product Offer Price: 20
+* POP Type: Normal
+* Price Category: Base Price
+* Price Mode: Non-Recurring
+* Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:54354 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "monthly data pack",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"monthly data pack","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description to monthly data pack\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description to monthly data pack\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": "monthly data pack",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: monthly data pack
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• Pop Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:42056 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+  "classification": "product_related"
+}
+----------------------------classification {
+  "classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "update the product description to monthly data pack"
+  },
+  {
+    "role": "user",
+    "content": "lets proceed"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "monthly data pack",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"monthly data pack","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description to monthly data pack\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"lets proceed\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: Not Provided * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"update the product description to monthly data pack\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"lets proceed\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is True
+-----------------------------Confirmation message: True
+INFO:     152.67.16.165:39966 - "POST /conversation HTTP/1.1" 200 OK
+INFO:     198.235.24.105:64128 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:58904 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     117.33.231.55:33996 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     13.91.179.103:50652 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:53396 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     103.203.57.20:37104 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     80.66.83.47:36426 - "CONNECT hotmail-com.olc.protection.outlook.com%3A25 HTTP/1.1" 404 Not Found
+INFO:     198.235.24.246:61102 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:42678 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     80.66.83.47:49242 - "CONNECT 80.66.83.47%3A80 HTTP/1.1" 404 Not Found
+INFO:     87.236.176.6:50591 - "GET / HTTP/1.1" 404 Not Found
+INFO:     205.210.31.9:63110 - "GET / HTTP/1.1" 404 Not Found
+INFO:     8.217.24.75:15935 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     185.191.126.213:36984 - "GET / HTTP/1.1" 404 Not Found
+INFO:     165.227.147.215:57692 - "GET /aaa9 HTTP/1.1" 404 Not Found
+INFO:     165.227.147.215:57696 - "GET /aab8 HTTP/1.1" 404 Not Found
+INFO:     165.227.147.215:57704 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:55256 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     104.152.52.51:34108 - "GET / HTTP/1.0" 404 Not Found
+INFO:     104.152.52.51:34130 - "GET /nice%20ports%2C/Trinity.txt.bak HTTP/1.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     104.152.52.51:34166 - "OPTIONS / HTTP/1.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     45.84.89.2:33196 - "GET / HTTP/1.1" 404 Not Found
+INFO:     27.63.252.61:21111 - "GET / HTTP/1.1" 404 Not Found
+INFO:     27.63.252.61:21112 - "GET / HTTP/1.1" 404 Not Found
+INFO:     27.63.252.61:21113 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.127:50934 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.127:49432 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.127:49438 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     193.118.55.180:33241 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     65.49.1.39:25629 - "GET / HTTP/1.1" 404 Not Found
+INFO:     65.49.1.46:16937 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     65.49.1.41:17407 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     65.49.1.43:48631 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     198.235.24.19:65082 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:48194 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     8.130.132.212:42980 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:53888 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     137.74.239.159:37553 - "GET / HTTP/1.1" 404 Not Found
+INFO:     147.135.23.107:40353 - "GET / HTTP/1.1" 404 Not Found
+INFO:     198.235.24.183:62854 - "GET / HTTP/1.1" 404 Not Found
+INFO:     8.218.248.59:56944 - "GET /.env HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:57668 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     77.90.22.42:37900 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:51700 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.208:63078 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:60618 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     205.210.31.151:61518 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:55656 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     45.84.89.2:55218 - "GET / HTTP/1.1" 404 Not Found
+INFO:     198.235.24.124:62564 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     152.42.255.95:36390 - "GET / HTTP/1.1" 404 Not Found
+INFO:     152.42.255.95:36400 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     13.58.97.162:40522 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     199.45.154.154:60296 - "GET / HTTP/1.1" 404 Not Found
+INFO:     199.45.154.154:40124 - "GET / HTTP/1.1" 404 Not Found
+INFO:     199.45.154.154:40136 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:59688 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.10:61310 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     27.63.252.61:60986 - "GET / HTTP/1.1" 404 Not Found
+INFO:     27.63.252.61:60986 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:47656 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     64.62.156.29:57683 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.156.32:42477 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.156.36:6835 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     64.62.156.28:59403 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.80:61184 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:50640 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     185.142.236.35:47342 - "GET / HTTP/1.1" 404 Not Found
+INFO:     185.142.236.35:47350 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     198.235.24.35:63276 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:44074 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     198.235.24.133:61204 - "GET / HTTP/1.1" 404 Not Found
+INFO:     193.34.214.123:35872 - "GET / HTTP/1.1" 404 Not Found
+INFO:     162.142.125.194:54200 - "GET / HTTP/1.1" 404 Not Found
+INFO:     162.142.125.194:52062 - "GET / HTTP/1.1" 404 Not Found
+INFO:     162.142.125.194:52072 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     35.165.81.144:52048 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:41208 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     205.210.31.82:59104 - "GET / HTTP/1.1" 404 Not Found
+INFO:     116.198.240.29:33538 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     116.198.240.29:33530 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     45.84.89.2:39042 - "GET / HTTP/1.1" 404 Not Found
+INFO:     44.220.188.136:57790 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:54878 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     64.62.197.165:47615 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.157:27285 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.157:10159 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     64.62.197.158:51269 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.146.61:51746 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.146.61:40316 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.146.61:40328 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:48042 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     34.77.157.58:51444 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:33748 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     198.235.24.41:65104 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.96:39762 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.96:38006 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.96:38030 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:49736 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     198.235.24.156:62372 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:47508 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     87.236.176.208:59059 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:50184 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     13.64.109.8:48178 - "GET / HTTP/1.1" 404 Not Found
+INFO:     74.82.47.31:26133 - "GET / HTTP/1.1" 404 Not Found
+INFO:     74.82.47.23:48599 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     74.82.47.23:63245 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     74.82.47.39:20305 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     198.235.24.71:59240 - "GET / HTTP/1.1" 404 Not Found
+INFO:     205.210.31.25:64484 - "GET / HTTP/1.1" 404 Not Found
+INFO:     45.84.89.2:48268 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:39466 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     162.142.125.38:46818 - "GET / HTTP/1.1" 404 Not Found
+INFO:     162.142.125.38:43922 - "GET / HTTP/1.1" 404 Not Found
+INFO:     162.142.125.38:43932 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     47.254.20.241:47984 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     172.168.40.198:53166 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.53:33530 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.53:59686 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.53:55480 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     103.19.208.105:45890 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:53336 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:55956 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.28:60726 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:50834 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     154.213.187.183:59244 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:33378 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:55792 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     167.94.138.62:59020 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.62:42774 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.62:42794 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     45.84.89.2:35452 - "GET / HTTP/1.1" 404 Not Found
+INFO:     198.235.24.244:58990 - "GET / HTTP/1.1" 404 Not Found
+INFO:     147.185.132.228:64642 - "GET / HTTP/1.1" 404 Not Found
+INFO:     39.102.210.183:59500 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:55532 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     183.134.104.149:16001 - "CONNECT www.baidu.com%3A443 HTTP/1.0" 404 Not Found
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here is the extracted content in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR",
+  "VAT": "5%"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5%\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5%\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {"classification": "product_related"}
+----------------------------classification {"classification": "product_related"}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5%\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"VAT\": \"5%\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"VAT\\\": \\\"5%\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"VAT\\\": \\\"5%\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+* Product Name: Hayyak 20
+* Product Description: 
+* Product Family: GSM
+* Product Group: Prepaid
+* Product Offer Price: 20
+* Pop Type: Normal
+* Price Category: Base Price
+* Price Mode: Non-Recurring
+* Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:54192 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here’s the extracted content in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "duration": "4 Weeks",
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"duration\": \"4 Weeks\",\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"duration\\\": \\\"4 Weeks\\\",\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"duration\\\": \\\"4 Weeks\\\",\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product name: Hayyak 20
+• Product description: null
+• Product family: GSM
+• Product group: Prepaid
+• Product offer price: 20
+• POP type: Normal
+• Price category: Base Price
+• Price mode: Non-Recurring
+• Product specification type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:32962 - "POST /conversation HTTP/1.1" 200 OK
+INFO:     198.235.24.17:61470 - "GET / HTTP/1.1" 404 Not Found
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here is the extracted content in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here is the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: None
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• POP Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:42522 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here is the extracted content formatted as JSON:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here is the extracted content formatted as JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here is the extracted content formatted as JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here is the extracted content formatted as JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here is the extracted content formatted as JSON:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content formatted as JSON:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here is the extracted content formatted as JSON:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: 
+• Product Family: GSM
+• Product Group: Prepaid
+• Offer Price: 20
+• POP Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:54826 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here's the extracted content in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR",
+  "vat": "5% VAT included"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {"classification": "product_related"}
+----------------------------classification {"classification": "product_related"}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here's the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here's the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"vat\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here's the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"vat\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product name: Hayyak 20
+• Product description: Not provided
+• Product family: GSM
+• Product group: Prepaid
+• Offer price: 20
+• Promotion type: Normal
+• Price category: Base Price
+• Price mode: Non-Recurring
+• Product specification type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:44520 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  \u2022 Product name: Hayyak 20 \u2022 Product description: Not provided \u2022 Product family: GSM \u2022 Product group: Prepaid \u2022 Offer price: 20 \u2022 Promotion type: Normal \u2022 Price category: Base Price \u2022 Price mode: Non-Recurring \u2022 Product specification type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  \u2022 Product name: Hayyak 20 \u2022 Product description: Not provided \u2022 Product family: GSM \u2022 Product group: Prepaid \u2022 Offer price: 20 \u2022 Promotion type: Normal \u2022 Price category: Base Price \u2022 Price mode: Non-Recurring \u2022 Product specification type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  \u2022 Product name: Hayyak 20 \u2022 Product description: Not provided \u2022 Product family: GSM \u2022 Product group: Prepaid \u2022 Offer price: 20 \u2022 Promotion type: Normal \u2022 Price category: Base Price \u2022 Price mode: Non-Recurring \u2022 Product specification type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  \u2022 Product name: Hayyak 20 \u2022 Product description: Not provided \u2022 Product family: GSM \u2022 Product group: Prepaid \u2022 Offer price: 20 \u2022 Promotion type: Normal \u2022 Price category: Base Price \u2022 Price mode: Non-Recurring \u2022 Product specification type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "Not provided",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "22",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"Not provided","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"22","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  \\u2022 Product name: Hayyak 20 \\u2022 Product description: Not provided \\u2022 Product family: GSM \\u2022 Product group: Prepaid \\u2022 Offer price: 20 \\u2022 Promotion type: Normal \\u2022 Price category: Base Price \\u2022 Price mode: Non-Recurring \\u2022 Product specification type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"increase offer price by 10%\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  \\u2022 Product name: Hayyak 20 \\u2022 Product description: Not provided \\u2022 Product family: GSM \\u2022 Product group: Prepaid \\u2022 Offer price: 20 \\u2022 Promotion type: Normal \\u2022 Price category: Base Price \\u2022 Price mode: Non-Recurring \\u2022 Product specification type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"increase offer price by 10%\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": "Not provided",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "22",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+* Product Name: Hayyak 20
+* Product Description: Not provided
+* Product Family: GSM
+* Product Group: Prepaid
+* Product Offer Price: 22
+* Pop Type: Normal
+* Price Category: Base Price
+* Price Mode: Non-Recurring
+* Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:54536 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here’s the extracted content in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR",
+  "vat": "5% VAT included"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\",\n  \"vat\": \"5% VAT included\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"vat\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\",\\n  \\\"vat\\\": \\\"5% VAT included\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+* Product Name: Hayyak 20
+* Product Description: None
+* Product Family: GSM
+* Product Group: Prepaid
+* Product Offer Price: 20
+* POP Type: Normal
+* Price Category: Base Price
+* Price Mode: Non-Recurring
+* Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:53226 - "POST /conversation HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: None * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: None * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: None * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "assistant",
+    "content": "Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: None * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?"
+  },
+  {
+    "role": "user",
+    "content": "increase offer price by 10%"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": "None",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "22",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":"None","product_family":"GSM","product_group":"Prepaid","Product_offer_price":"22","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: None * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"increase offer price by 10%\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"assistant\",\n    \"content\": \"Here are the details of your product with all mandatory default parameters enabled:  * Product Name: Hayyak 20 * Product Description: None * Product Family: GSM * Product Group: Prepaid * Product Offer Price: 20 * POP Type: Normal * Price Category: Base Price * Price Mode: Non-Recurring * Product Specification Type: ADDON  Would you like to update any of these details or proceed as is?\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"increase offer price by 10%\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": "None",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "22",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product name: Hayyak 20
+• Product description: None
+• Product family: GSM
+• Product group: Prepaid
+• Product offer price: 22
+• Pop type: Normal
+• Price category: Base Price
+• Price mode: Non-Recurring
+• Product specification type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:59086 - "POST /conversation HTTP/1.1" 200 OK
+INFO:     103.203.57.20:56138 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:42474 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     64.62.156.36:50009 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.156.37:23483 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.156.26:60061 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     64.62.156.25:8719 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     39.103.234.228:33234 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:44566 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     198.235.24.145:59200 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:54264 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     89.248.168.227:41484 - "GET / HTTP/1.1" 404 Not Found
+INFO:     161.35.103.142:45406 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.8.140.116:43432 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:38816 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     167.94.138.117:35850 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.117:36104 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.117:36116 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     8.154.46.135:54716 - "GET /.env HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     147.185.132.37:62550 - "GET / HTTP/1.1" 404 Not Found
+INFO:     47.236.243.143:39690 - "GET /.env HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:48810 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     45.84.89.2:41696 - "GET / HTTP/1.1" 404 Not Found
+INFO:     147.185.132.132:63264 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.111:42506 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.111:54968 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.145.111:39884 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     147.185.132.207:62078 - "GET / HTTP/1.1" 404 Not Found
+INFO:     205.210.31.149:64240 - "GET / HTTP/1.1" 404 Not Found
+INFO:     165.154.120.253:33404 - "GET / HTTP/1.1" 404 Not Found
+INFO:     165.154.120.253:33486 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     165.154.120.253:33542 - "GET /sitemap.xml HTTP/1.1" 404 Not Found
+INFO:     165.154.120.253:33540 - "GET /robots.txt HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:56388 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     167.94.138.116:55290 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.116:41444 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.116:41456 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:35260 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     139.59.69.206:41604 - "GET / HTTP/1.1" 404 Not Found
+INFO:     139.59.69.206:41610 - "GET /login HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     45.33.109.17:57080 - "GET / HTTP/1.1" 404 Not Found
+INFO:     66.175.213.4:21662 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.221:8093 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.213:53383 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.221:57875 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     64.62.197.226:34127 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:49456 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.242:61470 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:40440 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     139.59.148.218:59004 - "GET / HTTP/1.1" 404 Not Found
+INFO:     139.59.148.218:59010 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     205.210.31.238:58336 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:51928 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     8.216.65.159:19648 - "GET / HTTP/1.1" 404 Not Found
+INFO:     123.160.223.75:11793 - "GET / HTTP/1.1" 404 Not Found
+INFO:     111.7.96.168:36768 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     71.6.134.234:60942 - "GET / HTTP/1.1" 404 Not Found
+INFO:     71.6.134.234:48070 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     45.84.89.2:55420 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:36382 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.140:62382 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     178.215.238.24:40478 - "CONNECT google.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     154.212.141.178:58154 - "GET / HTTP/1.1" 404 Not Found
+INFO:     118.26.39.50:53102 - "GET / HTTP/1.1" 404 Not Found
+INFO:     118.26.39.50:53104 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.12:41915 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.14:27571 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.13:26817 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     64.62.197.3:23417 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.246:61166 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:46884 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     185.242.226.48:53204 - "GET / HTTP/1.1" 404 Not Found
+INFO:     87.236.176.147:37331 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:34482 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:40846 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.254:59456 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:36734 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     4.255.99.81:57720 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:35796 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     45.84.89.2:42236 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:56336 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     198.235.24.149:63576 - "GET / HTTP/1.1" 404 Not Found
+INFO:     106.75.70.89:57862 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.46:52227 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.62.197.40:54295 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     64.62.197.35:4361 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     64.62.197.36:53579 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     162.142.125.45:51990 - "GET / HTTP/1.1" 404 Not Found
+INFO:     162.142.125.45:51996 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     205.210.31.176:61608 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:58502 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:39514 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     205.210.31.53:64018 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:40796 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     147.135.23.98:60815 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     137.74.239.159:42701 - "GET / HTTP/1.1" 404 Not Found
+INFO:     205.210.31.111:63216 - "GET / HTTP/1.1" 404 Not Found
+INFO:     47.180.136.243:59758 - "GET / HTTP/1.0" 404 Not Found
+INFO:     154.213.184.18:37292 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     167.94.138.119:45410 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.119:52482 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.119:52484 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     89.248.168.227:33672 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:48666 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     45.84.89.2:35024 - "GET / HTTP/1.1" 404 Not Found
+INFO:     147.185.132.112:60672 - "GET / HTTP/1.1" 404 Not Found
+INFO:     13.58.97.162:34106 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     154.213.184.18:47232 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     65.49.1.76:50411 - "GET / HTTP/1.1" 404 Not Found
+INFO:     65.49.1.70:33325 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     65.49.1.78:34831 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     65.49.1.77:39347 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     198.235.24.6:63216 - "GET / HTTP/1.1" 404 Not Found
+INFO:     198.235.24.24:61110 - "GET / HTTP/1.1" 404 Not Found
+INFO:     185.191.126.213:43020 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:40584 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     31.220.1.144:41840 - "GET / HTTP/1.1" 404 Not Found
+INFO:     154.213.184.18:54622 - "CONNECT example.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     162.243.238.227:55810 - "GET / HTTP/1.1" 404 Not Found
+INFO:     162.243.238.227:55814 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     167.94.146.58:36122 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.146.58:47718 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.146.58:47724 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+processing image
+************ Here’s the extracted content from the image in JSON format:
+
+```json
+{
+  "plan_name": "Hayyak 20",
+  "validity": "4 Weeks",
+  "units": {
+    "data_allowance": "34 GB",
+    "flexi_minutes": "650 min"
+  },
+  "price": "20 OMR"
+}
+```
+messagesssssssssssssssss--------------->>>>>>>>>>>>>>>>>>>>> [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is 
+You are an AI assistant tasked with determining whether a given conversation message is related to product creation or if it's a general chatbot conversation. Your goal is to classify the message accurately.
+
+Context:
+- Product creation conversations typically involve discussing features, specifications, design, manufacturing, prototypes, materials, dimensions, colors, sizes, functions, purposes, target markets, prices, or costs of a product.
+- General chatbot conversations can cover a wide range of topics not specifically related to product creation.
+
+Instructions:
+1. Carefully analyze the given message.
+2. Determine if the message is primarily about product creation or if it's a general conversation.
+3. Provide your classification as either "product_related" or "general_conversation".
+4. it is product_related if the text is associated with creation of a plan , product 
+
+
+Message to classify:
+[
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+
+classification (product_related/general_conversation):
+give response in only this format  json
+
+
+
+the response is {
+"classification": "product_related"
+}
+----------------------------classification {
+"classification": "product_related"
+}
+messagesssssssssssssssss [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+the prompt is Extract the following information from the conversation and format it as JSON. Use the exact field names from the provided schema.
+     If any field is missing from the conversation, replace it with null.
+     carefully look at user and assistant information 
+     Conversation:
+     [
+  {
+    "role": "user",
+    "content": "Here\u2019s the extracted content from the image in JSON format:\n\n```json\n{\n  \"plan_name\": \"Hayyak 20\",\n  \"validity\": \"4 Weeks\",\n  \"units\": {\n    \"data_allowance\": \"34 GB\",\n    \"flexi_minutes\": \"650 min\"\n  },\n  \"price\": \"20 OMR\"\n}\n```"
+  }
+]
+     
+      Product Schema: {
+  "product_name": "",
+  "product_description": "",
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+} Type means basic / add on  it does not include product specification like 1 GB 
+      price, 2 GB price etc the price should be in numeric string nothing should follow after that 
+      Product_offer_price the field means  the price of the product  / cost of the product . anything related to  price extract it in this field 
+      special discount price will be Product_offer_price
+      keep the default value as it is unless asked to change it 
+      Expected output: 
+      just  json don't  include any text every value should be string
+       I JUST WANT ONLY JSON , NO QUOTES BEFORE OR AFTER IT
+the response is form instruct api is {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+--------------------------------Response from API: product extraction  {"product_name":"Hayyak 20","product_description":null,"product_family":"GSM","product_group":"Prepaid","Product_offer_price":"20","pop_type":"Normal","price_category":"Base Price","price_mode":"Non-Recurring","product_specification_type":"ADDON"}
+the boolean in check field is True
+the prompt for confirmation is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content from the image in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the prompt is 
+    Please confirm whether confirmation is made by the user by going through the conversations:
+    see if confirmation message: is present in the conversation message
+    if the user said continue with confirmation message its confirmed
+    conversations:
+    "[\n  {\n    \"role\": \"user\",\n    \"content\": \"Here\\u2019s the extracted content from the image in JSON format:\\n\\n```json\\n{\\n  \\\"plan_name\\\": \\\"Hayyak 20\\\",\\n  \\\"validity\\\": \\\"4 Weeks\\\",\\n  \\\"units\\\": {\\n    \\\"data_allowance\\\": \\\"34 GB\\\",\\n    \\\"flexi_minutes\\\": \\\"650 min\\\"\\n  },\\n  \\\"price\\\": \\\"20 OMR\\\"\\n}\\n```\"\n  }\n]"
+    Expected output:
+    reply with  only either True or False nothing else
+    
+the response is False
+-----------------------------Confirmation message: False
+the prompt is 
+   reply with confirmation message from the given schema make a bullet point and ask user for confirmation whether they need to update it or continue .
+    The Schema :
+    {
+  "product_name": "Hayyak 20",
+  "product_description": null,
+  "product_family": "GSM",
+  "product_group": "Prepaid",
+  "Product_offer_price": "20",
+  "pop_type": "Normal",
+  "price_category": "Base Price",
+  "price_mode": "Non-Recurring",
+  "product_specification_type": "ADDON"
+}
+    Product Specification 
+    expected output:
+    
+    Confirmation message:
+    
+    text message asking for confirmation of the field , not code. 
+    
+    Address by saying  Here are the details of your product with all mandatory default parameters enabled
+    
+    showcase the keys and values only give the replay
+    remove under score from keys and display it in commmon language
+    
+    no footer or notes.
+    and finally ask Would you like to update any of these details or proceed as is?
+    
+        
+    
+the response is Here are the details of your product with all mandatory default parameters enabled:
+
+• Product Name: Hayyak 20
+• Product Description: null
+• Product Family: GSM
+• Product Group: Prepaid
+• Product Offer Price: 20
+• Pop Type: Normal
+• Price Category: Base Price
+• Price Mode: Non-Recurring
+• Product Specification Type: ADDON
+
+Would you like to update any of these details or proceed as is?
+INFO:     152.67.16.165:59864 - "POST /conversation HTTP/1.1" 200 OK
