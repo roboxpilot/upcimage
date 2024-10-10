@@ -4,11 +4,13 @@ from pydantic import BaseModel
 import base64
 import os
 from prompts import Prompts
- 
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class ImageProcessor:
     def __init__(self, api_key):
-        self.client = instructor.patch(OpenAI(api_key="sk-None-yjdh1eHVAQf8eC7Iaq6CT3BlbkFJrBJZE1y99Fr3Pvwjld8R"))
+        self.client = instructor.patch(OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
 
     def make_api_call(self, prompt: str, image_data: str) -> str:
         try:
